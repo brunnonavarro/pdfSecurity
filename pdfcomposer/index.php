@@ -1,22 +1,12 @@
 <?php
 
-require 'protection.php';
-
-/*
-$pdf = new AlphaPDF();
-$pdf->AddPage();
-$pdf-> SetAlpha(0.3);
-$pdf->SetFont('Arial','B',48);
-$pdf->Cell(40,10,'Hello World!');
-$pdf->RotatedText(100,60,'Hello!',45);
-$pdf->Output();
-*/
+require 'transparency.php';
 
 $caminhoArquivo = 'C:\Users\Piolho\Desktop\LivrosBC\testeconvertido.pdf';
 $cpf = "000.000.000-00";
 $senha = "123";
 
-$pdf = new FPDF_Protection();
+$pdf = new AlphaPDF();
 $pdf->AddPage('P','A4','');
 $pdf->SetProtection(array(),$senha,'');
 $pdf->setSourceFile($caminhoArquivo);
@@ -37,6 +27,5 @@ for ($numeroPagina = 1; $numeroPagina < $pageCount; $numeroPagina++)
 }
 
 $pdf->Output();
-
 
 ?>

@@ -1,9 +1,9 @@
 <?php
 
+use setasign\FpdiProtection\FpdiProtection;
+require_once('vendor/autoload.php');
 
-require 'vendor/autoload.php';
-
-class RPDF extends \setasign\Fpdi\Fpdi {
+class RPDF extends FpdiProtection {
 
     var $angle=0;
 
