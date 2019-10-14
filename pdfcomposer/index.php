@@ -10,47 +10,58 @@ $senha = "123";
 // Todas as bibliotecas usadas se encontram no arquivo composer.json
 $pdf = new AlphaPDF();
 $pdf->AddPage('P','A4','');
-$pdf->SetProtection(array('print'),$senha,'');
+$pdf->SetProtection(array(),$senha,'');
 $pdf->setSourceFile($caminhoArquivo);
 $pageCount = $pdf-> setSourceFile($caminhoArquivo);
 
+
+
 for ($numeroPagina = 1; $numeroPagina < $pageCount; $numeroPagina++)
 {   
-    $alturaTextCorpo = rand(30,240);
-
+    $pdf->SetAlpha(1);
+    $alturaTextCorpo = rand(20,250);
     $tplIdx = $pdf->importPage($numeroPagina);
     $pdf->useTemplate($tplIdx,0,0,190,280,true);
-    $pdf->SetTextColor(255, 0, 0);
-    $pdf->SetAlpha(0.2);
 
-    $pdf->setFont('Arial','B',48);
-    $pdf->RotatedText(10,$alturaTextCorpo,'LICENCIADO PARA:',0);
-    $pdf->RotatedText(25,$alturaTextCorpo+15,$cpf,0);
 
-    $pdf->SetAlpha(0.3);
-    //posição 1
-    $pdf->setFont('Arial','B',14);
-    $pdf->RotatedText(20,10,'LICENCIADO PARA:',0);
-    $pdf->RotatedText(25,20,$cpf,0);
+    if ($numeroPagina % 2 == 0){
 
-    //posição 2
-    $pdf->setFont('Arial','B',14);
-    $pdf->RotatedText(120,10,'LICENCIADO PARA:',0);
-    $pdf->RotatedText(125,20,$cpf,0);  
+        $posicaoTextoBorda = rand(0,1);
+        $pdf->SetAlpha(0.4);
+        
+        if ($posicaoTextoBorda == 0) {
+            //posição 2
+            $pdf->setFont('Arial','B',14);
+            $pdf->RotatedText(120,10,'LICENCIADO PARA:',0);
+            $pdf->RotatedText(125,15,$cpf,0);  
+        
+        } elseif ($posicaoTextoBorda == 1) {
+            //posição 4
+            $pdf->setFont('Arial','B',14);
+            $pdf->RotatedText(120,270,'LICENCIADO PARA:',0);
+            $pdf->RotatedText(125,275,$cpf,0);
+        }
+
+    }
+    else {
+        $posicaoTextoBorda = rand(0,1);
+        $pdf->SetAlpha(0.4);
+
+        if ($posicaoTextoBorda == 0){
+            //posição 1
+            $pdf->setFont('Arial','B',14);
+            $pdf->RotatedText(20,10,'LICENCIADO PARA:',0);
+            $pdf->RotatedText(25,15,$cpf,0);
+
+        } elseif ($posicaoTextoBorda == 1) {
+            //posição 3
+            $pdf->setFont('Arial','B',14);
+            $pdf->RotatedText(20,270,'LICENCIADO PARA:',0);
+            $pdf->RotatedText(25,275,$cpf,0);
+        }
+    }
     
-    //posição 3
-    $pdf->setFont('Arial','B',14);
-    $pdf->RotatedText(20,260,'LICENCIADO PARA:',0);
-    $pdf->RotatedText(25,270,$cpf,0);
-
-    //posição 4
-    $pdf->setFont('Arial','B',14);
-    $pdf->RotatedText(120,260,'LICENCIADO PARA:',0);
-    $pdf->RotatedText(125,270,$cpf,0);
-
-
     $pdf-> AddPage();
-
 }
 
 $pdf->Output();
